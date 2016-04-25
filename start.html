@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>HTML5 Web Worker</title>
+<script type="text/javascript">
+    
+    var worker;
+    
+    function startWorker(){
+        // Utworzenie nowego obiektu 
+        worker = new Worker("worker.js");
+        
+        // Wywołanie funkcji, która odświeża wyświetlany wynik na stonie
+        worker.onmessage = update;
+        
+        // Uruchomienie skryptu 
+        worker.postMessage("start");
+    }
+    
+    function update(event){
+        // Funkcja przechowywująca dane od skryptu 
+        document.getElementById("result").innerHTML = event.data;
+    }
+    
+    function stopWorker(){
+        // Zatrzymanie skryptu
+        worker.terminate();
+    }
+</script>
+</head>
+<body>
+    <h1> Web Workers</h1>
+    <button onclick="startWorker();" type="button">Start web worker</button>
+    <button type="button" onclick="stopWorker();">Stop web worker</button>
+    <div id="result">
+        <!-- Wyświetlenie wyniku -->
+    </div>
+</body>
+</html>                                		
